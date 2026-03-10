@@ -6,6 +6,9 @@ import tseslint from 'typescript-eslint';
 export default defineConfig(
   tseslint.configs.recommended,
   ...mantine,
+  {
+    rules: {'curly': 'off'}
+  },
   { ignores: ['**/*.{mjs,cjs,js,d.ts,d.mts}', '.next'] },
   {
     files: ['**/*.story.tsx'],

@@ -1,15 +1,10 @@
 import '@mantine/core/styles.css'
 
-import React from 'react'
 import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/core'
-import { theme } from '../theme'
+import { theme } from '@/shared/theme'
+import { theme as mantineTheme } from '../theme'
 
-export const metadata = {
-    title: 'Streamer',
-    description: "Jonasz's streaming app",
-}
-
-export default function RootLayout({ children }: { children: any }) {
+const RootLayout = ({ children }: { children: any }) => {
     return (
         <html lang="en" {...mantineHtmlProps}>
             <head>
@@ -20,9 +15,12 @@ export default function RootLayout({ children }: { children: any }) {
                     content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
                 />
             </head>
-            <body>
-                <MantineProvider theme={theme}>{children}</MantineProvider>
+            <body style={{ backgroundColor: theme.gray[0] }}>
+                <MantineProvider theme={mantineTheme} forceColorScheme="dark">
+                    {children}
+                </MantineProvider>
             </body>
         </html>
     )
 }
+export default RootLayout
