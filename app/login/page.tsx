@@ -8,10 +8,10 @@ import { theme } from '@/shared/theme'
 
 const LoginPage = () => {
     const router = useRouter()
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [error, setError] = useState('')
-    const [loading, setLoading] = useState(false)
+    const [email, setEmail] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
+    const [error, setError] = useState<string>('')
+    const [loading, setLoading] = useState<boolean>(false)
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
