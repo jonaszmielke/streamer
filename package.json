@@ -23,10 +23,16 @@
     "@mantine/core": "8.3.16",
     "@mantine/hooks": "8.3.16",
     "@next/bundle-analyzer": "^16.0.0",
+    "@prisma/adapter-pg": "^7.5.0",
+    "@prisma/client": "^7.5.0",
     "@tabler/icons-react": "^3.35.0",
     "@vidstack/react": "^1.12.13",
+    "bcryptjs": "^3.0.3",
     "media-icons": "^1.1.5",
     "next": "16.1.6",
+    "next-auth": "^5.0.0-beta.30",
+    "pg": "^8.20.0",
+    "prisma": "^7.5.0",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
@@ -42,11 +48,14 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
+    "@types/bcryptjs": "^3.0.0",
     "@types/eslint-plugin-jsx-a11y": "^6",
     "@types/jest": "^30.0.0",
     "@types/node": "^25.0.0",
+    "@types/pg": "^8.18.0",
     "@types/react": "19.2.14",
     "babel-loader": "^10.0.0",
+    "dotenv": "^17.3.1",
     "eslint": "^9.37.0",
     "eslint-config-mantine": "^4.0.3",
     "eslint-config-next": "16.1.6",
@@ -62,8 +71,12 @@
     "stylelint": "^17.0.0",
     "stylelint-config-standard-scss": "^17.0.0",
     "ts-jest": "^29.4.4",
+    "ts-node": "^10.9.2",
     "typescript": "5.9.3",
     "typescript-eslint": "^8.46.0"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "packageManager": "yarn@4.13.0"
 }
