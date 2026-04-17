@@ -2,7 +2,7 @@
 
 import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from '@prisma/client'
-import bcrypt from 'bcryptjs'
+import { hashPassword } from '../lib/hash'
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
 const prisma = new PrismaClient({ adapter })
@@ -16,12 +16,13 @@ const main = async () => {
         process.exit(1)
     }
 
-    const hash = await bcrypt.hash(password, 12)
+    const hash = hashPassword(password)
 
     await prisma.user.upsert({
         where: { email },
         update: {},
         create: {
+            name: 'Admin',
             email,
             password: hash,
             role: 'ADMIN',

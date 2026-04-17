@@ -5,47 +5,55 @@ import { useRouter } from 'next/navigation'
 import { Button, Flex, PasswordInput, rem, Text, TextInput, Title } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { theme } from '@/shared/theme'
-import { login } from './actions/login.action'
+import { register } from './_actions/register.action'
 
-type LoginFormValues = {
+type RegisterFormValues = {
+    username: string
     email: string
     password: string
+    confirmPassword: string
 }
 
-const LoginPage = () => {
+const RegisterPage = () => {
     const router = useRouter()
     const [error, setError] = useState<string>('')
     const [loading, setLoading] = useState<boolean>(false)
 
-    const form = useForm<LoginFormValues>({
+    const form = useForm<RegisterFormValues>({
         initialValues: {
+            username: '',
             email: '',
             password: '',
+            confirmPassword: '',
         },
         validate: {
+            username: (value) => (value.length > 0 ? null : 'Username is required'),
             email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-            password: (value) => (value.length > 0 ? null : 'Password is required'),
+            password: (value) => (value.length >= 6 ? null : 'Password must be at least 6 characters'),
+            confirmPassword: (value, values) =>
+                value === values.password ? null : 'Passwords do not match',
         },
     })
 
-    const handleSubmit = async (values: LoginFormValues) => {
+    const handleSubmit = async (values: RegisterFormValues) => {
         setError('')
         setLoading(true)
 
         try {
-            const result = await login({
+            const result = await register({
+                name: values.username,
                 email: values.email,
                 password: values.password,
             })
 
             if (!result.success) {
-                setError(result.error || 'Invalid email or password')
+                setError(result.error || 'Registration failed')
             } else {
                 router.push('/')
                 router.refresh()
             }
         } catch {
-            setError('An error occurred during login')
+            setError('An error occurred during registration')
         } finally {
             setLoading(false)
         }
@@ -69,18 +77,15 @@ const LoginPage = () => {
                         bg={theme.gray[1]}
                     >
                         <Text c={theme.white[0]} size={rem(24)}>
-                            Sign in
+                            Sign up
                         </Text>
-                        <TextInput
-                            label="Email"
-                            type="email"
-                            w={300}
-                            {...form.getInputProps('email')}
-                        />
+                        <TextInput label="Username" w={300} {...form.getInputProps('username')} />
+                        <TextInput label="Email" type="email" w={300} {...form.getInputProps('email')} />
+                        <PasswordInput label="Password" w={300} {...form.getInputProps('password')} />
                         <PasswordInput
-                            label="Password"
+                            label="Confirm Password"
                             w={300}
-                            {...form.getInputProps('password')}
+                            {...form.getInputProps('confirmPassword')}
                         />
                         {error && (
                             <Text c="red" size="sm">
@@ -95,7 +100,7 @@ const LoginPage = () => {
                             loading={loading}
                             styles={{ root: { cursor: 'default' } }}
                         >
-                            Sign in
+                            Sign up
                         </Button>
                     </Flex>
                 </form>
@@ -104,4 +109,4 @@ const LoginPage = () => {
     )
 }
 
-export default LoginPage
+export default RegisterPage

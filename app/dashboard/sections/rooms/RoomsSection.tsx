@@ -1,4 +1,7 @@
+'use client'
+
 import { Flex, rem, Table, Text, Title } from '@mantine/core'
+import { useEffect, useState } from 'react'
 
 type Room = {
     number: number
@@ -9,8 +12,7 @@ type Room = {
     createdAt: Date
 }
 
-const mockRooms: Room[] = [
-    {
+const mockRooms: Room[] = [{
         number: 1,
         owner: {
             id: '1',
@@ -35,6 +37,25 @@ const mockRooms: Room[] = [
         createdAt: new Date(),
     },
 ]
+
+const LiveDuration = ({ createdAt }: { createdAt: Date }) => {
+    const [duration, setDuration] = useState<string>('0 min')
+
+    useEffect(() => {
+        const updateDuration = () => {
+            const minutes = Math.floor((Date.now() - createdAt.getTime()) / 1000 / 60)
+            setDuration(`${minutes} min`)
+        }
+
+        updateDuration()
+        const interval = setInterval(updateDuration, 60000) // Update every minute
+
+        return () => clearInterval(interval)
+    }, [createdAt])
+
+    return <Text w="100%" ta="center">{duration}</Text>
+}
+    
 
 export const RoomsSection = () => {
     return (
@@ -82,11 +103,7 @@ export const RoomsSection = () => {
                                     </Text>
                                 </Table.Td>
                                 <Table.Td>
-                                    <Text w="100%" ta="center">
-                                        {new Date(
-                                            new Date().getTime() - room.createdAt.getTime()
-                                        ).getTime()}
-                                    </Text>
+                                    <LiveDuration createdAt={room.createdAt} />
                                 </Table.Td>
                             </Table.Tr>
                         ))}

@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@mantine/core": "8.3.16",
+    "@mantine/form": "^9.0.2",
     "@mantine/hooks": "8.3.16",
     "@next/bundle-analyzer": "^16.0.0",
     "@prisma/adapter-pg": "^7.5.0",
