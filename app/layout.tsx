@@ -1,6 +1,7 @@
 import '@mantine/core/styles.css'
 
 import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/core'
+import QueryProvider from '@/app/_providers/QueryProvider'
 import { theme } from '@/shared/theme'
 import { theme as mantineTheme } from '../theme'
 
@@ -17,7 +18,7 @@ const RootLayout = ({ children }: { children: any }) => {
             </head>
             <body style={{ backgroundColor: theme.gray[0] }}>
                 <MantineProvider theme={mantineTheme} forceColorScheme="dark">
-                    {children}
+                    <QueryProvider>{children}</QueryProvider>
                 </MantineProvider>
             </body>
         </html>

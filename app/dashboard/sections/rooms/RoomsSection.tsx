@@ -1,7 +1,7 @@
 'use client'
 
-import { Flex, rem, Table, Text, Title } from '@mantine/core'
 import { useEffect, useState } from 'react'
+import { Flex, rem, Table, Text, Title } from '@mantine/core'
 
 type Room = {
     number: number
@@ -12,7 +12,8 @@ type Room = {
     createdAt: Date
 }
 
-const mockRooms: Room[] = [{
+const mockRooms: Room[] = [
+    {
         number: 1,
         owner: {
             id: '1',
@@ -53,18 +54,22 @@ const LiveDuration = ({ createdAt }: { createdAt: Date }) => {
         return () => clearInterval(interval)
     }, [createdAt])
 
-    return <Text w="100%" ta="center">{duration}</Text>
+    return (
+        <Text w="100%" ta="center">
+            {duration}
+        </Text>
+    )
 }
-    
 
 export const RoomsSection = () => {
     return (
         <Flex
             direction="column"
             align="center"
-            justify="center"
             w="100%"
             mih={`calc(100vh - ${rem(70)})`}
+            justify="flex-start"
+            pt={60}
             gap={12}
         >
             <Flex direction="column" align="center" justify="center" w="30%" gap={20}>
