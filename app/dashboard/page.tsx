@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useMemo } from 'react'
+import { Suspense, useCallback, useEffect, useMemo } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { DashboardHeader } from './components/Header'
 import { CreateRoomSection } from './sections/create/CreateRoomSection'
@@ -15,7 +15,7 @@ export enum DashboardSections {
 
 const validSections = Object.values(DashboardSections) as string[]
 
-const DashboardPage = () => {
+const DashboardContent = () => {
     const router = useRouter()
 
     const searchParams = useSearchParams()
@@ -63,5 +63,11 @@ const DashboardPage = () => {
         </>
     )
 }
+
+const DashboardPage = () => (
+    <Suspense>
+        <DashboardContent />
+    </Suspense>
+)
 
 export default DashboardPage
