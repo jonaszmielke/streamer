@@ -43,7 +43,10 @@ export type GetRoomsResult = {
 
 export const getRooms = async ({ page }: GetRoomsProps): Promise<GetRoomsResult> => {
     return {
-        rooms: mockRooms,
+        rooms: mockRooms.map((room) => ({
+            ...room,
+            number: room.number + (page - 1) * 10,
+        })),
         // nextPage: rooms.length === PAGE_SIZE ? page + 1 : undefined,
         nextPage: page + 1,
     }

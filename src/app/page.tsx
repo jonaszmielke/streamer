@@ -1,58 +1,40 @@
-'use client'
+import { PinEntry } from '@/components/pinEntry'
+import { Wordmark } from '@/components/ui/wordmark'
+import { LabelTag } from '@/components/ui/labelTag'
+import { DisplayHeading } from '@/components/ui/displayHeading'
+import Link from 'next/link'
 
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog'
-
-export default function Home() {
+const MainPage = () => {
     return (
-        <main className="min-h-screen bg-background p-12 flex flex-col gap-8 max-w-2xl mx-auto">
-            <h1 className="font-serif text-4xl font-light tracking-tight text-foreground">
-                Streamer
-            </h1>
+        <main className="flex flex-col min-h-dvh px-10 py-8">
+            <header className="flex justify-between items-baseline">
+                <Wordmark size={18} />
+                <Link
+                    href="/login"
+                    className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-hi hover:text-cream transition-colors"
+                >
+                    Sign in →
+                </Link>
+            </header>
 
-            <div className="flex gap-3 items-center">
-                <Button>Primary</Button>
-                <Button variant="secondary">Secondary</Button>
+            <div className="flex-1 flex flex-col justify-center max-w-[520px] mx-auto w-full">
+                <LabelTag className="block mb-5">— Issue 001 · Watch together</LabelTag>
+                <DisplayHeading className="text-[56px] leading-none italic mb-3">
+                    Enter the
+                    <br />
+                    <span className="not-italic text-beige">six&#8209;digit code.</span>
+                </DisplayHeading>
+                <p className="text-muted-hi text-sm mb-8 max-w-[380px]">
+                    A private room, opened by your host. No account needed to watch.
+                </p>
+                <PinEntry />
             </div>
 
-            <Card className="bg-card">
-                <CardHeader>
-                    <CardTitle className="font-sans text-card-foreground">Design tokens</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <p className="font-sans text-muted-foreground text-sm">
-                        Dark-only oklch palette. Accent is aged-paper beige.
-                    </p>
-                    <code className="font-mono text-xs text-accent block mt-3">
-                        --accent: oklch(0.78 0.045 80)
-                    </code>
-                </CardContent>
-            </Card>
-
-            <Dialog>
-                <DialogTrigger render={<Button variant="outline" />}>
-                    Open dialog
-                </DialogTrigger>
-                <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle className="font-serif font-light">Confirmation</DialogTitle>
-                        <DialogDescription className="font-sans">
-                            Tokens, fonts, and registry all wired correctly.
-                        </DialogDescription>
-                    </DialogHeader>
-                    <code className="font-mono text-xs text-muted-foreground block">
-                        {new Date().toISOString()}
-                    </code>
-                </DialogContent>
-            </Dialog>
+            <footer className="flex justify-end">
+                <LabelTag>v0.4</LabelTag>
+            </footer>
         </main>
     )
 }
+
+export default MainPage

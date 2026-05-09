@@ -1,36 +1,44 @@
 @import 'tailwindcss';
 
 :root {
-    /* Streamer · dark (only theme) */
-    --background: oklch(0.18 0.008 60);
-    --foreground: oklch(0.92 0.008 75);
+    --background: #0e0d0b;
+    --foreground: #f4ecd8;
 
-    --card: oklch(0.22 0.008 60);
-    --card-foreground: oklch(0.92 0.008 75);
+    --card: #16140f;
+    --card-foreground: #f4ecd8;
 
-    --popover: oklch(0.22 0.008 60);
-    --popover-foreground: oklch(0.92 0.008 75);
+    --popover: #16140f;
+    --popover-foreground: #f4ecd8;
 
-    --primary: oklch(0.92 0.008 75);
-    --primary-foreground: oklch(0.18 0.008 60);
+    --primary: #e8dcc4;
+    --primary-foreground: #0e0d0b;
 
-    --secondary: oklch(0.28 0.01 60);
-    --secondary-foreground: oklch(0.92 0.008 75);
+    --secondary: #1c1a14;
+    --secondary-foreground: #f4ecd8;
 
-    --accent: oklch(0.78 0.045 80); /* aged-paper beige, kept warm against ink */
-    --accent-foreground: oklch(0.18 0.008 60);
+    --accent: #e8dcc4;
+    --accent-foreground: #0e0d0b;
 
-    --muted: oklch(0.26 0.008 60);
-    --muted-foreground: oklch(0.68 0.012 70);
+    --muted: #16140f;
+    --muted-foreground: #a39c8e;
 
     --destructive: oklch(0.55 0.18 25);
     --destructive-foreground: oklch(0.96 0.005 75);
 
-    --border: oklch(0.3 0.01 60);
-    --input: oklch(0.3 0.01 60);
-    --ring: oklch(0.65 0.025 75);
+    --border: rgba(232, 220, 196, 0.12);
+    --input: rgba(232, 220, 196, 0.12);
+    --ring: rgba(232, 220, 196, 0.28);
 
     --radius: 0.25rem;
+
+    /* Extended palette */
+    --surface: #181818;
+    --surface-2: #1c1a14;
+    --border-hi: rgba(232, 220, 196, 0.28);
+    --beige: #e8dcc4;
+    --cream: #f4ecd8;
+    --muted-hi: #a39c8e;
+    --muted-dim: #7a756c;
 
     --font-sans: var(--font-inter-tight), system-ui, sans-serif;
     --font-serif: var(--font-spectral), Georgia, serif;
@@ -58,6 +66,15 @@
     --color-border: var(--border);
     --color-input: var(--input);
     --color-ring: var(--ring);
+
+    /* Extended tokens */
+    --color-surface: var(--surface);
+    --color-surface-2: var(--surface-2);
+    --color-border-hi: var(--border-hi);
+    --color-beige: var(--beige);
+    --color-cream: var(--cream);
+    --color-muted-hi: var(--muted-hi);
+    --color-muted-dim: var(--muted-dim);
 
     --radius-sm: calc(var(--radius) - 2px);
     --radius-md: calc(var(--radius));
