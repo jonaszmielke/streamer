@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter_Tight, JetBrains_Mono, Manrope, Spectral } from 'next/font/google'
 import './globals.css'
+import QueryProvider from '@/components/QueryProvider'
 
 const interTight = Inter_Tight({
     subsets: ['latin'],
@@ -38,7 +39,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             lang="en"
             className={`${interTight.variable} ${spectral.variable} ${jetbrainsMono.variable} ${manrope.variable}`}
         >
-            <body>{children}</body>
+            <QueryProvider>
+                <body>{children}</body>
+            </QueryProvider>
         </html>
     )
 }
