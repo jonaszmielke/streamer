@@ -1,42 +1,7 @@
 'use client'
 
+import { useRooms } from './_hooks/useRooms'
 import { useEffect, useState } from 'react'
-
-type Room = {
-    number: number
-    owner: {
-        id: string
-        name: string
-    }
-    createdAt: Date
-}
-
-const mockRooms: Room[] = [
-    {
-        number: 1,
-        owner: {
-            id: '1',
-            name: 'Owner 1',
-        },
-        createdAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24),
-    },
-    {
-        number: 2,
-        owner: {
-            id: '2',
-            name: 'Owner 2',
-        },
-        createdAt: new Date(),
-    },
-    {
-        number: 3,
-        owner: {
-            id: '3',
-            name: 'Owner 3',
-        },
-        createdAt: new Date(),
-    },
-]
 
 const LiveDuration = ({ createdAt }: { createdAt: Date }) => {
     const [duration, setDuration] = useState<string>('0 min')
@@ -57,9 +22,22 @@ const LiveDuration = ({ createdAt }: { createdAt: Date }) => {
 }
 
 export const RoomsSection = () => {
+    const [search, setSearch] = useState<string>('')
+    const { rooms, lastElementRef, isLoading } = useRooms(search)
+
+    if (isLoading) return <p>Loading...</p>
+
+    if (rooms.length === 0) return <p>No rooms found.</p>
+
     return (
         <>
             <p>Active rooms</p>
+            <input
+                type="text"
+                placeholder="Search..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+            />
             <table>
                 <thead>
                     <tr>
@@ -75,8 +53,11 @@ export const RoomsSection = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {mockRooms.map((room) => (
-                        <tr key={room.number}>
+                    {rooms.map((room, index) => (
+                        <tr
+                            key={room.number}
+                            ref={index === rooms.length - 1 ? lastElementRef : undefined}
+                        >
                             <td>
                                 <p>{room.number}</p>
                             </td>

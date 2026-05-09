@@ -2,9 +2,12 @@
 
 import { useUsers } from '@/app/dashboard/sections/users/_hooks/useUsers'
 import useFetchMoreObserver from '@/lib/useFetchMoreObserver'
+import { useState } from 'react'
 
 export const UsersSection = () => {
-    const { users, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useUsers()
+    const [search, setSearch] = useState<string>('')
+    // TODO: debounce search
+    const { users, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useUsers(search)
 
     const { lastElementRef } = useFetchMoreObserver({
         isFetchingNextPage,
@@ -18,6 +21,12 @@ export const UsersSection = () => {
 
     return (
         <>
+            <input
+                type="text"
+                placeholder="Search..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+            />
             <table>
                 <thead>
                     <tr>

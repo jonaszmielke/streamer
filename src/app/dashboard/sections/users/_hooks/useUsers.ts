@@ -4,10 +4,10 @@ import { getUsers } from '@/app/dashboard/sections/users/_actions/getUsers'
 import { queryKeys } from '@/shared/queryKeys'
 import { useInfiniteQuery } from '@tanstack/react-query'
 
-export const useUsers = () => {
+export const useUsers = (search: string) => {
     const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteQuery({
-        queryKey: [queryKeys.users],
-        queryFn: ({ pageParam }) => getUsers(pageParam),
+        queryKey: [queryKeys.users, search],
+        queryFn: ({ pageParam }) => getUsers({ page: pageParam, search }),
         initialPageParam: 0,
         getNextPageParam: (lastPage) => lastPage.nextPage,
     })

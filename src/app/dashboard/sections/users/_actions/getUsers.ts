@@ -1,17 +1,40 @@
 'use server'
 
-import { User } from '@prisma/client'
 import { prisma } from '@/lib/prisma'
+import { User } from '@prisma/client'
 
 const PAGE_SIZE = 10
+
+type GetUsersProps = {
+    page: number
+    search?: string
+}
 
 export type GetUsersResult = {
     users: Pick<User, 'id' | 'name' | 'role' | 'lastActive'>[]
     nextPage: number | undefined
 }
 
-export const getUsers = async (page: number): Promise<GetUsersResult> => {
+export const getUsers = async ({ page, search }: GetUsersProps): Promise<GetUsersResult> => {
     const users = await prisma.user.findMany({
+        ...(search && {
+            where: {
+                OR: [
+                    {
+                        name: {
+                            contains: search,
+                            mode: 'insensitive',
+                        },
+                    },
+                    {
+                        email: {
+                            contains: search,
+                            mode: 'insensitive',
+                        },
+                    },
+                ],
+            },
+        }),
         select: {
             id: true,
             name: true,
