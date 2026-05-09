@@ -1,9 +1,10 @@
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "new-york",
+  "style": "base-nova",
   "rsc": true,
   "tsx": true,
   "tailwind": {
+    "config": "",
     "css": "src/app/globals.css",
     "baseColor": "stone",
     "cssVariables": true,
@@ -16,5 +17,8 @@
     "ui": "@/components/ui",
     "lib": "@/lib",
     "hooks": "@/hooks"
+  },
+  "registries": {
+    "@base-ui": "https://ui.shadcn.com/r/base-ui/{name}"
   }
 }
