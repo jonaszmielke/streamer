@@ -16,7 +16,7 @@ export const DashboardHeader = ({ activeSection, setActiveSection }: DashboardHe
         <header className="flex items-center gap-8 px-8 py-5 border-b border-border">
             <Wordmark size={18} />
 
-            <nav className="flex gap-5 flex-1">
+            <nav className="flex justify-center gap-5 flex-1">
                 {tabs.map((section) => {
                     const active = activeSection === section
                     return (
@@ -37,11 +37,11 @@ export const DashboardHeader = ({ activeSection, setActiveSection }: DashboardHe
             </nav>
 
             {/* TODO: wire to session (next-auth SessionProvider not yet added to layout) */}
-            <div className="flex items-center gap-2 bg-surface border border-border rounded-full pl-1 pr-3 py-1">
+            <div className="flex items-center gap-2 md:bg-surface md:border md:border-border md:rounded-full md:pl-1 md:pr-3 md:py-1">
                 <div className="w-7 h-7 rounded-full bg-beige text-background font-mono text-[11px] font-semibold flex items-center justify-center shrink-0">
-                    —
+                    U
                 </div>
-                <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-hi">
+                <span className="hidden md:inline font-mono text-[10px] uppercase tracking-[0.14em] text-muted-hi">
                     user
                 </span>
             </div>
