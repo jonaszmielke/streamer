@@ -5,14 +5,13 @@ import { Drawer, DrawerContent, DrawerTitle } from '@/components/ui/drawer'
 import { Wordmark } from '@/components/ui/wordmark'
 import { cn } from '@/lib/utils'
 import { MenuIcon } from 'lucide-react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 
 const tabs = Object.values(DashboardSections)
 
-type DashboardHeaderProps = {
-    activeSection: DashboardSections
-    setActiveSection: (section: DashboardSections) => void
-}
+const hrefFor = (section: DashboardSections) => `/dashboard/${section}`
 
 const UserBadge = ({ className }: { className?: string }) => (
     <div
@@ -30,13 +29,11 @@ const UserBadge = ({ className }: { className?: string }) => (
     </div>
 )
 
-export const DashboardHeader = ({ activeSection, setActiveSection }: DashboardHeaderProps) => {
+export const DashboardHeader = () => {
+    const pathname = usePathname()
     const [drawerOpen, setDrawerOpen] = useState<boolean>(false)
 
-    const handleTabClick = (section: DashboardSections) => {
-        setActiveSection(section)
-        setDrawerOpen(false)
-    }
+    const isActive = (section: DashboardSections) => pathname === hrefFor(section)
 
     return (
         <>
@@ -45,20 +42,20 @@ export const DashboardHeader = ({ activeSection, setActiveSection }: DashboardHe
 
                 <nav className="hidden md:flex justify-center gap-5 flex-1">
                     {tabs.map((section) => {
-                        const active = activeSection === section
+                        const active = isActive(section)
                         return (
-                            <button
+                            <Link
                                 key={section}
-                                onClick={() => setActiveSection(section)}
+                                href={hrefFor(section)}
                                 className={cn(
-                                    'font-mono text-[10px] uppercase tracking-[0.18em] pb-1.5 border-b transition-colors cursor-pointer bg-transparent border-x-0 border-t-0',
+                                    'font-mono text-[10px] uppercase tracking-[0.18em] pb-1.5 border-b transition-colors cursor-pointer bg-transparent border-x-0 border-t-0 no-underline',
                                     active
                                         ? 'text-cream border-b-beige'
                                         : 'text-muted-dim border-b-transparent hover:text-muted-hi'
                                 )}
                             >
                                 {section}
-                            </button>
+                            </Link>
                         )
                     })}
                 </nav>
@@ -84,20 +81,21 @@ export const DashboardHeader = ({ activeSection, setActiveSection }: DashboardHe
 
                     <nav className="flex flex-col mt-6 pt-6 border-t border-border gap-1">
                         {tabs.map((section) => {
-                            const active = activeSection === section
+                            const active = isActive(section)
                             return (
-                                <button
+                                <Link
                                     key={section}
-                                    onClick={() => handleTabClick(section)}
+                                    href={hrefFor(section)}
+                                    onClick={() => setDrawerOpen(false)}
                                     className={cn(
-                                        'font-mono text-[10px] uppercase tracking-[0.18em] text-left px-3 py-3 rounded-sm transition-colors cursor-pointer bg-transparent border-l-2',
+                                        'font-mono text-[10px] uppercase tracking-[0.18em] text-left px-3 py-3 rounded-sm transition-colors cursor-pointer bg-transparent border-l-2 no-underline',
                                         active
                                             ? 'text-cream border-l-beige'
                                             : 'text-muted-dim border-l-transparent hover:text-muted-hi'
                                     )}
                                 >
                                     {section}
-                                </button>
+                                </Link>
                             )
                         })}
                     </nav>

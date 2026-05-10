@@ -1,6 +1,6 @@
 'use client'
 
-import { useUsers } from '@/app/dashboard/sections/users/_hooks/useUsers'
+import { useUsers } from '@/app/dashboard/users/_hooks/useUsers'
 import useFetchMoreObserver from '@/lib/useFetchMoreObserver'
 import { useState } from 'react'
 import { DisplayHeading, Accent } from '@/components/ui/displayHeading'
@@ -8,7 +8,7 @@ import { IconPlus } from '@/components/ui/icons'
 import { AddUserModal } from './_components/AddUserModal'
 import { cn } from '@/lib/utils'
 
-export const UsersSection = () => {
+const UsersPage = () => {
     const [search, setSearch] = useState<string>('')
     const [addUserOpen, setAddUserOpen] = useState(false)
     // TODO: debounce search
@@ -106,3 +106,5 @@ export const UsersSection = () => {
         </div>
     )
 }
+
+export default UsersPage

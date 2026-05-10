@@ -33,7 +33,7 @@ const formatRoomCode = (num: number) => {
     return `${s.slice(0, 3)} ${s.slice(3)}`
 }
 
-export const RoomsSection = () => {
+const RoomsPage = () => {
     const router = useRouter()
     const [search, setSearch] = useState<string>('')
     const { rooms, lastElementRef, isLoading } = useRooms(search)
@@ -95,7 +95,7 @@ export const RoomsSection = () => {
                         />
                     </div>
                     <button
-                        onClick={() => router.push('?section=create')}
+                        onClick={() => router.push('/dashboard/create')}
                         className="flex items-center gap-1.5 bg-beige text-background rounded-[10px] px-3 py-2 font-sans font-semibold text-[12px] cursor-pointer border-none"
                     >
                         <IconPlus size={12} /> New
@@ -170,3 +170,5 @@ export const RoomsSection = () => {
         </div>
     )
 }
+
+export default RoomsPage

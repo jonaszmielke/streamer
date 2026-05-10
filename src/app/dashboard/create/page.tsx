@@ -8,7 +8,7 @@ import { LabelTag } from '@/components/ui/labelTag'
 import { DisplayHeading, Accent } from '@/components/ui/displayHeading'
 import { ArrowButton } from '@/components/ui/arrowButton'
 
-export const CreateRoomSection = () => {
+const CreateRoomPage = () => {
     const router = useRouter()
     const [roomName, setRoomName] = useState<string>('')
     const [maxViewers, setMaxViewers] = useState<number>(10)
@@ -70,7 +70,7 @@ export const CreateRoomSection = () => {
                         Open the room
                     </ArrowButton>
                     <button
-                        onClick={() => router.push('?section=rooms')}
+                        onClick={() => router.push('/dashboard/rooms')}
                         className="bg-transparent text-cream border border-border rounded-sm px-5 py-4 text-[13px] font-sans cursor-pointer hover:border-border-hi transition-colors"
                     >
                         Cancel
@@ -80,3 +80,5 @@ export const CreateRoomSection = () => {
         </div>
     )
 }
+
+export default CreateRoomPage

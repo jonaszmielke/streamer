@@ -1,6 +1,6 @@
 'use client'
 
-import { getUsers } from '@/app/dashboard/sections/users/_actions/getUsers'
+import { getUsers } from '@/app/dashboard/users/_actions/getUsers'
 import { queryKeys } from '@/shared/queryKeys'
 import { useInfiniteQuery } from '@tanstack/react-query'
 
