@@ -1,18 +1,19 @@
 'use client'
 
-import { useUsers } from '@/app/dashboard/users/_hooks/useUsers'
-import useFetchMoreObserver from '@/lib/useFetchMoreObserver'
-import { useState } from 'react'
-import { DisplayHeading, Accent } from '@/components/ui/displayHeading'
-import { IconPlus } from '@/components/ui/icons'
 import { AddUserModal } from './_components/AddUserModal'
+import { useUsers } from '@/app/dashboard/users/_hooks/useUsers'
+import { Accent, DisplayHeading } from '@/components/ui/displayHeading'
+import { IconPlus } from '@/components/ui/icons'
+import useFetchMoreObserver from '@/lib/useFetchMoreObserver'
 import { cn } from '@/lib/utils'
+import { useState } from 'react'
 
 const UsersPage = () => {
     const [search, setSearch] = useState<string>('')
     const [addUserOpen, setAddUserOpen] = useState(false)
     // TODO: debounce search
-    const { users, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useUsers(search)
+    const { users, quantity, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+        useUsers(search)
 
     const { lastElementRef } = useFetchMoreObserver({
         isFetchingNextPage,
@@ -29,25 +30,23 @@ const UsersPage = () => {
 
     return (
         <div className="px-8 py-9">
-            <div className="flex justify-between items-center mb-5">
-                <DisplayHeading className="text-[28px]">
-                    <Accent>{users.length}</Accent> people
+            <div className="flex flex-wrap items-center gap-2.5 mb-5">
+                <DisplayHeading className="text-[28px] flex-1 md:flex-none md:mr-auto">
+                    <Accent>{quantity}</Accent> people
                 </DisplayHeading>
-                <div className="flex items-center gap-2.5">
-                    <input
-                        type="text"
-                        placeholder="Search members…"
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        className="bg-surface border border-border rounded-full px-3.5 py-2 text-[13px] text-cream font-sans outline-none placeholder:text-muted-dim w-52"
-                    />
-                    <button
-                        onClick={() => setAddUserOpen(true)}
-                        className="inline-flex items-center gap-1.5 bg-beige text-background rounded-full px-3.5 py-2 font-sans font-semibold text-[12px] cursor-pointer border-none"
-                    >
-                        <IconPlus size={12} /> Add user
-                    </button>
-                </div>
+                <button
+                    onClick={() => setAddUserOpen(true)}
+                    className="order-2 md:order-3 inline-flex items-center gap-1.5 bg-beige text-background rounded-full px-3.5 py-2 font-sans font-semibold text-[12px] cursor-pointer border-none"
+                >
+                    <IconPlus size={12} /> Add user
+                </button>
+                <input
+                    type="text"
+                    placeholder="Search members…"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="order-3 w-full md:order-2 md:w-52 bg-surface border border-border rounded-full px-3.5 py-2 text-[13px] text-cream font-sans outline-none placeholder:text-muted-dim"
+                />
             </div>
 
             {users.length === 0 ? (
@@ -61,7 +60,7 @@ const UsersPage = () => {
                             <div
                                 key={user.id}
                                 ref={isLast ? lastElementRef : undefined}
-                                className="grid grid-cols-[1fr_100px_140px_80px] gap-3 px-[18px] py-3 items-center border-b border-border last:border-b-0"
+                                className="grid grid-cols-[minmax(0,1fr)_70px_70px] md:grid-cols-[1fr_100px_140px_80px] gap-3 px-3 md:px-[18px] py-3 items-center border-b border-border last:border-b-0"
                             >
                                 <span className="flex items-center gap-3">
                                     <span
@@ -89,7 +88,7 @@ const UsersPage = () => {
                                 <span className="text-muted-hi text-[12px]">
                                     {new Date(user.lastActive).toLocaleDateString()}
                                 </span>
-                                <span className="text-muted-hi text-[12px] cursor-pointer text-right hover:text-cream transition-colors">
+                                <span className="hidden md:inline text-muted-hi text-[12px] cursor-pointer text-right hover:text-cream transition-colors">
                                     Manage →
                                 </span>
                             </div>

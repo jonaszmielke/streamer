@@ -13,28 +13,27 @@ type GetUsersProps = {
 export type GetUsersResult = {
     users: Pick<User, 'id' | 'name' | 'role' | 'lastActive'>[]
     nextPage: number | undefined
+    quantity?: number
 }
 
 export const getUsers = async ({ page, search }: GetUsersProps): Promise<GetUsersResult> => {
-    const users = await prisma.user.findMany({
-        ...(search && {
-            where: {
-                OR: [
-                    {
-                        name: {
-                            contains: search,
-                            mode: 'insensitive',
-                        },
+    const usersQuery = prisma.user.findMany({
+        where: {
+            OR: [
+                {
+                    name: {
+                        contains: search,
+                        mode: 'insensitive' as const,
                     },
-                    {
-                        email: {
-                            contains: search,
-                            mode: 'insensitive',
-                        },
+                },
+                {
+                    email: {
+                        contains: search,
+                        mode: 'insensitive' as const,
                     },
-                ],
-            },
-        }),
+                },
+            ],
+        },
         select: {
             id: true,
             name: true,
@@ -46,8 +45,13 @@ export const getUsers = async ({ page, search }: GetUsersProps): Promise<GetUser
         take: PAGE_SIZE,
     })
 
+    const quantityQuery = page !== 0 ? undefined : prisma.user.count()
+
+    const [users, quantity] = await Promise.all([usersQuery, quantityQuery])
+
     return {
         users,
         nextPage: users.length === PAGE_SIZE ? page + 1 : undefined,
+        quantity,
     }
 }

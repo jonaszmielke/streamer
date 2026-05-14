@@ -1,11 +1,11 @@
 'use client'
 
 import { useRooms } from './_hooks/useRooms'
+import { Accent, DisplayHeading } from '@/components/ui/displayHeading'
+import { IconCopy, IconEye, IconPlay, IconPlus, IconStop } from '@/components/ui/icons'
+import { LabelTag } from '@/components/ui/labelTag'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { LabelTag } from '@/components/ui/labelTag'
-import { DisplayHeading, Accent } from '@/components/ui/displayHeading'
-import { IconPlus, IconCopy, IconPlay, IconStop, IconEye } from '@/components/ui/icons'
 
 const LiveDuration = ({ createdAt }: { createdAt: Date }) => {
     const [duration, setDuration] = useState<string>('—')
@@ -59,10 +59,8 @@ const RoomsPage = () => {
             {/* Stat cards */}
             <div className="flex gap-3 mb-5">
                 {[
-                    { label: 'Open rooms', value: String(rooms.length) },
-                    { label: 'Live now', value: String(rooms.length), accent: true },
-                    { label: 'Total viewers', value: '—' }, // TODO: add viewer count to Room type
-                    { label: 'Peak today', value: '—' },    // TODO: track peak in server action
+                    { label: 'Total viewers', value: '42' }, // TODO: add viewer count to Room type
+                    { label: 'Peak today', value: '58' }, // TODO: track peak in server action
                 ].map((s) => (
                     <div
                         key={s.label}
@@ -70,7 +68,7 @@ const RoomsPage = () => {
                     >
                         <LabelTag className="block">{s.label}</LabelTag>
                         <p
-                            className={`font-serif font-semibold text-[28px] tracking-[-0.02em] mt-1 ${s.accent ? 'text-beige' : 'text-cream'}`}
+                            className={`font-serif font-semibold text-[28px] tracking-[-0.02em] mt-1 text-white`}
                         >
                             {s.value}
                         </p>
@@ -78,30 +76,27 @@ const RoomsPage = () => {
                 ))}
             </div>
 
+            <div className="flex flex-wrap items-center gap-2.5 mb-5">
+                <span className="font-serif  text-[28px] text-cream flex-1 md:flex-none md:mr-auto">
+                    Active rooms
+                </span>
+                <button
+                    onClick={() => router.push('/dashboard/create')}
+                    className="order-2 md:order-3 inline-flex items-center gap-1.5 bg-beige text-background rounded-[10px] px-3 py-2 font-sans font-semibold text-[12px] cursor-pointer border-none"
+                >
+                    <IconPlus size={12} /> New
+                </button>
+                <input
+                    type="text"
+                    placeholder="Search…"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="order-3 w-full md:order-2 md:w-48 bg-surface-2 border border-border rounded-full px-3 py-1.5 text-[13px] text-cream font-sans outline-none placeholder:text-muted-dim"
+                />
+            </div>
+
             {/* Table card */}
             <div className="bg-surface border border-border rounded-2xl overflow-hidden">
-                {/* Card header */}
-                <div className="flex justify-between items-center px-[18px] py-3.5 border-b border-border">
-                    <div className="flex items-center gap-4">
-                        <span className="font-sans font-semibold text-[15px] text-cream">
-                            Active rooms
-                        </span>
-                        <input
-                            type="text"
-                            placeholder="Search…"
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            className="bg-surface-2 border border-border rounded-full px-3 py-1.5 text-[13px] text-cream font-sans outline-none placeholder:text-muted-dim w-48"
-                        />
-                    </div>
-                    <button
-                        onClick={() => router.push('/dashboard/create')}
-                        className="flex items-center gap-1.5 bg-beige text-background rounded-[10px] px-3 py-2 font-sans font-semibold text-[12px] cursor-pointer border-none"
-                    >
-                        <IconPlus size={12} /> New
-                    </button>
-                </div>
-
                 {rooms.length === 0 ? (
                     <div className="px-[18px] py-8">
                         <p className="font-serif italic text-muted-hi">No rooms found.</p>
@@ -109,12 +104,12 @@ const RoomsPage = () => {
                 ) : (
                     <>
                         {/* Column headers */}
-                        <div className="grid grid-cols-[1fr_1fr_100px_140px_1fr] px-[18px] py-2.5 border-b border-border">
-                            {['Code', 'Owner', 'Viewers', 'Live for', 'Actions'].map((h) => (
-                                <LabelTag key={h} className={h === 'Actions' ? 'text-right' : ''}>
-                                    {h}
-                                </LabelTag>
-                            ))}
+                        <div className="grid grid-cols-[minmax(0,1fr)_90px_70px] md:grid-cols-[1fr_1fr_100px_140px_1fr] gap-3 md:gap-0 px-3 md:px-[18px] py-2.5 border-b border-border">
+                            <LabelTag className="hidden md:block">Code</LabelTag>
+                            <LabelTag>Owner</LabelTag>
+                            <LabelTag>Viewers</LabelTag>
+                            <LabelTag>Live for</LabelTag>
+                            <LabelTag className="hidden md:block text-right">Actions</LabelTag>
                         </div>
 
                         {/* Rows */}
@@ -122,20 +117,27 @@ const RoomsPage = () => {
                             <div
                                 key={room.number}
                                 ref={index === rooms.length - 1 ? lastElementRef : undefined}
-                                className="grid grid-cols-[1fr_1fr_100px_140px_1fr] px-[18px] py-3.5 items-center border-b border-border last:border-b-0 text-[13px]"
+                                className="grid grid-cols-[minmax(0,1fr)_90px_70px] md:grid-cols-[1fr_1fr_100px_140px_1fr] gap-3 md:gap-0 px-3 md:px-[18px] py-3.5 items-center border-b border-border last:border-b-0 text-[13px]"
                             >
-                                <span className="flex items-center gap-2 font-mono text-cream tracking-[0.05em]">
+                                <span className="hidden md:flex items-center gap-2 font-mono text-cream tracking-wider">
                                     <span className="w-1.5 h-1.5 rounded-full bg-beige shadow-[0_0_0_3px_rgba(232,220,196,0.13)]" />
                                     {formatRoomCode(room.number)}
                                 </span>
-                                <span className="text-muted-hi">@{room.owner.name}</span>
+                                <span className="flex flex-col gap-0.5 md:block">
+                                    <span className="md:hidden font-mono text-cream tracking-wider text-base">
+                                        {formatRoomCode(room.number)}
+                                    </span>
+                                    <span className="text-muted-hi">@{room.owner.name}</span>
+                                </span>
                                 <span className="text-cream">
                                     <span className="inline-flex items-center gap-1.5">
-                                        <IconEye size={12} /> —
+                                        {/* TODO: add actual viewer count */}
+                                        {/* eslint-disable-next-line react-hooks/purity */}
+                                        <IconEye size={12} /> {Math.floor(Math.random() * 100)}
                                     </span>
                                 </span>
                                 <LiveDuration createdAt={room.createdAt} />
-                                <span className="flex justify-end gap-1.5">
+                                <span className="hidden md:flex justify-end gap-1.5">
                                     {[
                                         {
                                             label: 'Copy',

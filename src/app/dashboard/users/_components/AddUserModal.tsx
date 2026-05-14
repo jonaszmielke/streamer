@@ -1,19 +1,15 @@
 'use client'
 
 import { createUser } from '../_actions/createUser'
+import { ArrowButton } from '@/components/ui/arrowButton'
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
+import { Accent, DisplayHeading } from '@/components/ui/displayHeading'
+import { LabelTag } from '@/components/ui/labelTag'
+import { cn } from '@/lib/utils'
+import { queryKeys } from '@/shared/queryKeys'
 import { Role } from '@prisma/client'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useState } from 'react'
-import {
-    Dialog,
-    DialogContent,
-    DialogTitle,
-} from '@/components/ui/dialog'
-import { DisplayHeading, Accent } from '@/components/ui/displayHeading'
-import { LabelTag } from '@/components/ui/labelTag'
-import { ArrowButton } from '@/components/ui/arrowButton'
-import { queryKeys } from '@/shared/queryKeys'
-import { cn } from '@/lib/utils'
 
 type AddUserModalProps = {
     open: boolean
@@ -117,7 +113,7 @@ export const AddUserModal = ({ open, onClose }: AddUserModalProps) => {
                     </p>
                 )}
 
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-5">
                     <ArrowButton
                         onClick={() => createUserMutation.mutate()}
                         disabled={!name || !email || createUserMutation.isPending}
