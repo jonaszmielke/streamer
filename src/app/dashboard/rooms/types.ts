@@ -4,5 +4,6 @@ export type Room = {
         id: string
         name: string
     }
+    viewers: number
     createdAt: Date
 }

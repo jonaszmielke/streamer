@@ -2,7 +2,7 @@
 
 import { Room } from '../types'
 
-const mockRooms: Room[] = [
+const mockRooms: Omit<Room, 'viewers'>[] = [
     {
         number: 1,
         owner: {
@@ -47,6 +47,7 @@ export const getRooms = async ({ page }: GetRoomsProps): Promise<GetRoomsResult>
         rooms: mockRooms.map((room) => ({
             ...room,
             number: room.number + page * 10,
+            viewers: Math.floor(Math.random() * 100),
         })),
         quantity: (page + 1) * 3,
         // nextPage: rooms.length === PAGE_SIZE ? page + 1 : undefined,
