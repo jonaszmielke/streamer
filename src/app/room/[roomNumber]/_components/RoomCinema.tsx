@@ -20,7 +20,7 @@ export const RoomCinema = ({ formattedCode, title, viewers, startedAt }: RoomCin
             style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 100%)' }}
         >
             <div className="flex items-center gap-4">
-                <Wordmark size={14} />
+                <Wordmark size={14} href="/" />
                 <span className="font-mono text-[10px] uppercase tracking-[0.08em] text-muted-hi">
                     / Room{' '}
                     <span className="font-mono text-cream">{formattedCode}</span>

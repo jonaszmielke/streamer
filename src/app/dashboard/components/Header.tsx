@@ -38,7 +38,7 @@ export const DashboardHeader = () => {
     return (
         <>
             <header className="flex items-center gap-8 px-8 py-5 border-b border-border">
-                <Wordmark size={18} />
+                <Wordmark size={18} href="/" />
 
                 <nav className="hidden md:flex justify-center gap-5 flex-1">
                     {tabs.map((section) => {

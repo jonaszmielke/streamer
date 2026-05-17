@@ -17,7 +17,7 @@ export const RoomPortrait = ({ formattedCode, title, viewers, startedAt }: RoomP
         <header className="flex justify-between items-center px-5 py-4 border-b border-border shrink-0">
             <div className="flex items-center gap-2.5">
                 <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-hi">←</span>
-                <Wordmark size={15} />
+                <Wordmark size={15} href="/" />
             </div>
             <span className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-hi">
                 <IconEye size={11} /> {viewers} watching
